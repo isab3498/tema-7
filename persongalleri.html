@@ -75,7 +75,8 @@
 
                 klon.querySelector("h3").textContent = ` ${person.gsx$navn.$t}`;
 
-                klon.querySelector("a").textContent = ` github.com/${person.gsx$github.$t}`;
+                klon.querySelector("a").href = ` https://github.com/${person.gsx$github.$t}`;
+                klon.querySelector("a").textContent = ` https://github.com/${person.gsx$github.$t}`;
 
                 klon.querySelector("img").src = person.gsx$billede.$t;
 
