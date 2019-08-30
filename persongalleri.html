@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+
+    <style>
+        .data_container {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 800px;
+
+        }
+
+        article {
+            border: solid;
+            padding: 10px;
+        }
+
+        img {
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Elever</h1>
+    <section class="data_container"></section>
+    <template>
+        <article>
+            <h3></h3>
+            <img src="" alt="">
+            <p class="type"></p>
+            <a href=""></a>
+        </article>
+    </template>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", hentjson);
+
+        let myjson;
+
+        async function hentjson() {
+            console.log("hentjson");
+
+            let myRawjson = await fetch("https://spreadsheets.google.com/feeds/list/1Xge7slZ9dEOTCn1Yxl3OE4xgvrXOL8Y_iu3WN1yGB1U/od6/public/values?alt=json");
+
+            myjson = await myRawjson.json();
+            //  console.log(myjson);
+
+            informationer();
+
+        }
+
+        function informationer() {
+            console.log("køre");
+
+
+            const listevisning = document.querySelector(".data_container");
+            const template = document.querySelector("template");
+
+            myjson.feed.entry.forEach((person) => {
+                //console.log(person.gsx$github.$t);
+
+
+                const klon = template.cloneNode(true).content;
+
+                klon.querySelector("h3").textContent = ` ${person.gsx$navn.$t}`;
+
+                klon.querySelector("a").textContent = ` github.com/${person.gsx$github.$t}`;
+
+                klon.querySelector("img").src = person.gsx$billede.$t;
+
+                listevisning.appendChild(klon);
+
+            });
+        }
+    </script>
+
+</body></html>
